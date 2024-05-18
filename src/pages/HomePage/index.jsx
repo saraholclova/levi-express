@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { JourneyPicker } from '../../components/JourneyPicker';
 import { JourneyDetail } from '../../components/JourneyDetail/JourneyDetail';
 import { SelectedSeat } from '../../components/SelectedSeat/SelectedSeat';
@@ -32,7 +32,7 @@ export const HomePage = () => {
       const data = await response.json();
 
       const reservationId = data.results.reservationId;
-      navigate(`http://localhost:5173/reservation/${reservationId}`);
+      navigate(`/reservation/${reservationId}`);
     };
     fetchRezervace();
   };
