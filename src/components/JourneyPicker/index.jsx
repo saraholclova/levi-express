@@ -103,7 +103,6 @@ export const CityOptions = ({ cities }) => {
 };
 
 export const DatesOptions = ({ dates }) => {
-  console.log(dates);
   return (
     <>
       <option value="">Vyberte</option>
