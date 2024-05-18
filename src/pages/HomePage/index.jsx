@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { JourneyPicker } from '../../components/JourneyPicker';
 import { JourneyDetail } from '../../components/JourneyDetail/JourneyDetail';
-import { SelectedSeat } from '../../components/SelectedSeat/SelectedSeat';
+
 import { useNavigate } from 'react-router-dom';
+import { SeatPicker } from '../../components/SeatPicker/SeatPicker';
 
 export const HomePage = () => {
   const [journey, setJourney] = useState(null);
@@ -43,7 +44,8 @@ export const HomePage = () => {
       {journey ? <JourneyDetail journey={journey.stops} /> : null}
       {/* Tady jsem si musela odtečkovat journey.stops, protože journey je ten celý objekt, ale mě zajímají jen zastávky */}
       {/* {journey && `Nalezeno spojení s id ${journey.journeyId}`} */}
-      {journey && <SelectedSeat number={journey.autoSeat} />}
+      <SeatPicker />
+
       <div className="controls container">
         <button onClick={handleBuy} className="btn btn--big" type="button">
           Rezervovat
