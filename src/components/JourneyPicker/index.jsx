@@ -5,12 +5,27 @@ export const JourneyPicker = ({ onJourneyChange }) => {
   const [fromCity, setFromCity] = useState('');
   const [toCity, setToCity] = useState('');
   const [date, setDate] = useState('');
+  const [cities, setCities] = useState([]);
+
+  useEffect(() => {
+    const fetchCities = async () => {
+      const response = await fetch(
+        'https://apps.kodim.cz/daweb/leviexpress/api/cities',
+      );
+      const data = await response.json();
+      setCities(data.results);
+    };
+
+    fetchCities();
+
+    // setCities([
+    //   { name: 'Praha', code: 'CZ-PRG' },
+    //   { name: 'Brno', code: 'CZ-BRQ' },
+    // ]);
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(fromCity);
-    console.log(toCity);
-    console.log(date);
   };
 
   return (
@@ -24,23 +39,13 @@ export const JourneyPicker = ({ onJourneyChange }) => {
               value={fromCity}
               onChange={(e) => setFromCity(e.target.value)}
             >
-              <option value="">Vyberte</option>
-              <option value="mesto01">Město 01</option>
-              <option value="mesto02">Město 02</option>
-              <option value="mesto03">Město 03</option>
-              <option value="mesto04">Město 04</option>
-              <option value="mesto05">Město 05</option>
+              <CityOptions cities={cities} />
             </select>
           </label>
           <label>
             <div className="journey-picker__label">Kam:</div>
             <select value={toCity} onChange={(e) => setToCity(e.target.value)}>
-              <option value="">Vyberte</option>
-              <option value="mesto01">Město 01</option>
-              <option value="mesto02">Město 02</option>
-              <option value="mesto03">Město 03</option>
-              <option value="mesto04">Město 04</option>
-              <option value="mesto05">Město 05</option>
+              <CityOptions cities={cities} />
             </select>
           </label>
           <label>
@@ -63,5 +68,19 @@ export const JourneyPicker = ({ onJourneyChange }) => {
         <img className="journey-picker__map" src="/map.svg" />
       </div>
     </div>
+  );
+};
+
+export const CityOptions = ({ cities }) => {
+  console.log(cities);
+  return (
+    <>
+      <option value="">Vyberte</option>
+      {cities.map((mesto) => (
+        <option key={mesto.code} value={mesto.code}>
+          {mesto.name}
+        </option>
+      ))}
+    </>
   );
 };
